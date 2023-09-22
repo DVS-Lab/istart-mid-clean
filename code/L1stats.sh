@@ -47,24 +47,6 @@ if [ -e $EV_MISSED_TRIAL ]; then
 else
 	SHAPE_MISSED_TRIAL=10
 fi
-EV_COMPN=${EVDIR}_event_computer_neutral.txt
-if [ -e $EV_COMPN ]; then
-	SHAPE_COMPN=3
-else
-	SHAPE_COMPN=10
-fi
-EV_STRANGERN=${EVDIR}_event_stranger_neutral.txt
-if [ -e $EV_STRANGERN ]; then
-	SHAPE_STRANGERN=3
-else
-	SHAPE_STRANGERN=10
-fi
-EV_FRIENDN=${EVDIR}_event_friend_neutral.txt
-if [ -e $EV_FRIENDN ]; then
-	SHAPE_FRIENDN=3
-else
-	SHAPE_FRIENDN=10
-fi
 
 if [ "$ppi" == "dmn" ]; then
 	echo Running nPPI sub-${sub}
@@ -138,7 +120,7 @@ if [ "$ppi" == "dmn" ]; then
 	-e 's@INPUT7@'$INPUT7'@g' \
 	-e 's@INPUT8@'$INPUT8'@g' \
 	-e 's@INPUT9@'$INPUT9'@g' \
-	-e 's@NVOLS@'$NVOLUMES'@g' \
+	-e 's@NVOLUMES@'$NVOLUMES'@g' \
 	<$ITEMPLATE> $OTEMPLATE
 	feat $OTEMPLATE
 
@@ -148,7 +130,6 @@ else # otherwise, do activation and seed-based ppi
         # commenting out the paths with the smoothing kernel flag (sm) since not in use for this study
 	if [ "$ppi" == "0" ]; then
 		TYPE=act
-		#OUTPUT=${MAINOUTPUT}/L1_task-${TASK}_model-${model}_type-${TYPE}_run-${run}_sm-${sm}
       OUTPUT=${MAINOUTPUT}/L1_task-${TASK}_model-${model}_type-${TYPE}_run-${run}_sm-${sm}
 	else
 		TYPE=ppi
@@ -166,16 +147,17 @@ else # otherwise, do activation and seed-based ppi
 
 	# create template and run analyses
 	ITEMPLATE=${maindir}/templates/L1_task-${TASK}_model-${model}_type-${TYPE}.fsf
-	OTEMPLATE=${MAINOUTPUT}/L1_sub-${sub}_task-${TASK}_model-${model}_seed-${ppi}_run-${run}_sm-${sm}.fsf
 	if [ "$ppi" == "0" ]; then
+		OTEMPLATE=${MAINOUTPUT}/L1_sub-${sub}_task-${TASK}_model-${model}_type-${TYPE}_run-${run}_sm-${sm}.fsf
 		sed -e 's@OUTPUT@'$OUTPUT'@g' \
 		-e 's@DATA@'$DATA'@g' \
 		-e 's@EVDIR@'$EVDIR'@g' \
 		-e 's@SMOOTH@'$sm'@g' \
 		-e 's@CONFOUNDEVS@'$CONFOUNDEVS'@g' \
-		-e 's@NVOLS@'$NVOLUMES'@g' \
+		-e 's@NVOLUMES@'$NVOLUMES'@g' \
 		<$ITEMPLATE> $OTEMPLATE
 	else
+		OTEMPLATE=${MAINOUTPUT}/L1_sub-${sub}_task-${TASK}_model-${model}_type-${TYPE}_seed-${ppi}_run-${run}_sm-${sm}.fsf
 		PHYS=${MAINOUTPUT}/ts_task-${TASK}_mask-${ppi}_run-${run}.txt
 		MASK=${maindir}/masks/seed-${ppi}.nii.gz
 		fslmeants -i $DATA -o $PHYS -m $MASK
@@ -193,7 +175,7 @@ else # otherwise, do activation and seed-based ppi
 		-e 's@PHYS@'$PHYS'@g' \
 		-e 's@SMOOTH@'$sm'@g' \
 		-e 's@CONFOUNDEVS@'$CONFOUNDEVS'@g' \
-		-e 's@NVOLS@'$NVOLUMES'@g' \
+		-e 's@NVOLUMES@'$NVOLUMES'@g' \
 		<$ITEMPLATE> $OTEMPLATE
 	fi
 	feat $OTEMPLATE
