@@ -56,6 +56,8 @@ else # try to run feat and clean up previous effort with partial output
 	-e 's@COPENUM@'$copenum'@g' \
 	-e 's@REPLACEME@'$REPLACEME'@g' \
 	-e 's@BASEDIR@'$maindir'@g' \
+	#-e 's@/data@'/ZPOOL/data'@g' \
+	#-e 's@istart-mid@'istart-mid-clean'@g' \
 	<$ITEMPLATE> $OTEMPLATE
 	echo "made it here"
 	feat $OTEMPLATE
