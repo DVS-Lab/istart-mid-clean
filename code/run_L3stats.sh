@@ -10,9 +10,9 @@ maindir="$(dirname "$scriptdir")"
 
 
 # this loop defines the different types of analyses that will go into the group comparisons
-for analysis in act; do #ppi_seed-NAcc; do # act nppi-dmn nppi-ecn ppi_seed | type-${type}_run-01
-	for INTerm in 4B 4C 4D  4E-VBeta 4F-VBeta 4G-VBeta; do #  wInt wOutInt running with and without Interactions interaction were correlated with main effects?
-	#for INTerm in 4A; do	
+for analysis in act ppi_seed-NAcc; do #ppi_seed-NAcc; do # act nppi-dmn nppi-ecn ppi_seed | type-${type}_run-01
+	#for INTerm in 4B 4C 4D  4E-VBeta 4F-VBeta 4G-VBeta; do #  wInt wOutInt running with and without Interactions interaction were correlated with main effects?
+	for INTerm in 4A; do	
 		analysistype=type-${analysis}
 		#analysistype=${analysis}
 
