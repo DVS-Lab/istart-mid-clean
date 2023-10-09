@@ -70,7 +70,7 @@ if [ "$ppi" == "dmn" ]; then
 
 	# network extraction. need to ensure you have run Level 1 activation
 	#MASK=${MAINOUTPUT}/L1_task-${TASK}_model-${model}_type-act_run-${run}_sm-${sm}.feat/mask
-	MASK=${MAINOUTPUT}/L1_task-${TASK}_model-${model}_type-act_run-${run}.feat/mask
+	MASK=${MAINOUTPUT}/L1_task-${TASK}_model-${model}_type-act_run-${run}_sm-5.feat/mask
         if [ ! -e ${MASK}.nii.gz ]; then
 		echo "cannot run nPPI because you're missing $MASK"
 		exit
