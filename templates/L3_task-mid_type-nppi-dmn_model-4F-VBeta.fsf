@@ -245,7 +245,7 @@ set fmri(regstandard_yn) 1
 set fmri(alternateReference_yn) 0
 
 # Standard image
-set fmri(regstandard) "/usr/share/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain"
+set fmri(regstandard) "/usr/share/fsl/6.0.3/ZPOOL/data/standard/MNI152_T1_2mm_brain"
 
 # Search space for registration to standard space
 # 0   : No search
@@ -273,145 +273,145 @@ set fmri(totalVoxels) 325325
 set fmri(ncopeinputs) 0
 
 # 4D AVW data or FEAT directory (1)
-set feat_files(1) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1001/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(1) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1001/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (2)
-set feat_files(2) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1003//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(2) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1003//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (3)
-set feat_files(3) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1004/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(3) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1004/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (4)
-set feat_files(4) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1006//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(4) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1006//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (5)
-set feat_files(5) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1009/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(5) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1009/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (6)
-set feat_files(6) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1010/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(6) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1010/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (7)
-set feat_files(7) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1011/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(7) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1011/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (8)
-set feat_files(8) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1012/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(8) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1012/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (9)
-set feat_files(9) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1013/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(9) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1013/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (10)
-set feat_files(10) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1015/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(10) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1015/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (11)
-set feat_files(11) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1016/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(11) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1016/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (12)
-set feat_files(12) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1019/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(12) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1019/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (13)
-set feat_files(13) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1021/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(13) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1021/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (14)
-set feat_files(14) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1242//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(14) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1242//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (15)
-set feat_files(15) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1243/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(15) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1243/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (16)
-set feat_files(16) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1244/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(16) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1244/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (17)
-set feat_files(17) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1245/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(17) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1245/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (18)
-set feat_files(18) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1247/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(18) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1247/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (19)
-set feat_files(19) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1248/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(19) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1248/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (20)
-set feat_files(20) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1249/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(20) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1249/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (21)
-set feat_files(21) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1255/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(21) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1255/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (22)
-set feat_files(22) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1276//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(22) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1276//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (23)
-set feat_files(23) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1282//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(23) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1282//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (24)
-set feat_files(24) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1286//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(24) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1286//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (25)
-set feat_files(25) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1294//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(25) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1294//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (26)
-set feat_files(26) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1300/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(26) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1300/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (27)
-set feat_files(27) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1301/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
+set feat_files(27) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1301/L2_task-mid_model-4_REPLACEME.gfeat/copeCOPENUM.feat/stats/cope1.nii.gz"
 
 # 4D AVW data or FEAT directory (28)
-set feat_files(28) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1302//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(28) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1302//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (29)
-set feat_files(29) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-1303//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(29) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-1303//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (30)
-set feat_files(30) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3116//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(30) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3116//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (31)
-set feat_files(31) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3125//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(31) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3125//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (32)
-set feat_files(32) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3140//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(32) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3140//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (33)
-set feat_files(33) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3143//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(33) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3143//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (34)
-set feat_files(34) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3166//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(34) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3166//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (35)
-set feat_files(35) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3167//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(35) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3167//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (36)
-set feat_files(36) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3170//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(36) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3170//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (37)
-set feat_files(37) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3173//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(37) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3173//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (38)
-set feat_files(38) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3175//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(38) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3175//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (39)
-set feat_files(39) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3176//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(39) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3176//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (40)
-set feat_files(40) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3189//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(40) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3189//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (41)
-set feat_files(41) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3190//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(41) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3190//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (42)
-set feat_files(42) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3199//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(42) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3199//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (43)
-set feat_files(43) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3200//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(43) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3200//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (44)
-set feat_files(44) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3206//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(44) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3206//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (45)
-set feat_files(45) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3212//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(45) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3212//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (46)
-set feat_files(46) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3218//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(46) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3218//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # 4D AVW data or FEAT directory (47)
-set feat_files(47) "/ZPOOL/data/projects/istart-mid/derivatives/fsl/sub-3220//L1_task-mid_model-4_REPLACEME_run-1.feat/stats/copeCOPENUM.nii.gz"
+set feat_files(47) "/ZPOOL/ZPOOL/data/projects/istart-mid-clean/derivatives/fsl/sub-3220//L1_task-mid_model-4_REPLACEME_run-1_sm-5.feat/stats/copeCOPENUM.nii.gz"
 
 # Add confound EVs text file
 set fmri(confoundevs) 0
