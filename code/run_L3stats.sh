@@ -50,6 +50,24 @@ for analysis in nppi-dmn; do #act; do #ppi_seed-NAcc; do # act nppi-dmn nppi-ecn
 				bash $SCRIPTNAME $copenum $copename $analysistype $INTerm &
 
 			done
+
+
+		elif [ "${analysistype}" == "type-nppi-dmn" ]; then
+			for copeinfo in "1 LargeGain" "2 SmallGain" "3 LargeLoss" "4 SmallLoss" "5 Hit" "6 Miss" "7 Neut" "8 Gain-Loss" "9 Gain-Neut" "10 Loss-Neut" "11 Salience" "12 Hit-Miss" "13 LG-SG" "14 LL-SL" "15 DMN"; do
+				# split copeinfo variable
+				set -- $copeinfo
+				copenum=$1
+				copename=$2
+
+
+				NCORES=12
+				SCRIPTNAME=${maindir}/code/L3stats.sh
+				while [ $(ps -ef | grep -v grep | grep $SCRIPTNAME | wc -l) -ge $NCORES ]; do
+					sleep 1s
+				done
+				bash $SCRIPTNAME $copenum $copename $analysistype $INTerm &
+
+			done
 		fi
 	done
 done
