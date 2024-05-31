@@ -29,16 +29,121 @@ scatter <- ggplot(data, aes(x=comp_RS,y=V_beta))+
 scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                                     panel.background = element_blank(), axis.line = element_line(colour = "gray"))
 
-# Fig 2 B2: TEPS x RS x Behavioral Motivation
+# Fig 2 B2: TEPS x RS x Behavioral Motivation **********************************
 scatter <- ggplot(data, aes(x=comp_RS, y=V_beta, col=teps_ant_split))+
   geom_point()+
   geom_point(shape=1)+
   geom_smooth(method=lm, se=TRUE, fullrange=TRUE, linetype="dashed", fill="lightgray")+
   labs(x="Reward Sensitivity",y="Behavioral Motivation")+
   stat_cor(method="pearson")
-scatter + scale_color_manual(values = c("orange", "blue")) + 
+scatter + scale_color_manual(values = c("black", "gray")) + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                                      panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+model1 <- lm(data$V_beta ~
+               data$comp_RS * data$score_teps_ant)
+summary(model1)
+
+# Fig 3: TEPS x RS x LL>SL VS Act **********************************
+scatter <- ggplot(data, aes(x=comp_RS, y=Act_LL_minus_SL, col=teps_ant_split))+
+  geom_point()+
+  geom_point(shape=1)+
+  geom_smooth(method=lm, se=TRUE, fullrange=TRUE, linetype="dashed", fill="lightgray")+
+  labs(x="Reward Sensitivity",y="VS Activation (LL>SL)")+
+  stat_cor(method="pearson")
+scatter + scale_color_manual(values = c("black", "gray")) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+model1 <- lm(data$Act_LL_minus_SL ~
+               data$comp_RS * data$score_teps_ant)
+summary(model1)
+
+# Fig 4?: TEPS x RS x PPI_seed-VS_target-VMPFC **********************************
+
+model1 <- lm(data$PPI_Salience ~
+               data$comp_RS * data$V_beta)
+summary(model1)
+
+model1 <- lm(data$PPI_LG_minus_SG ~
+               data$comp_RS * data$V_beta)
+summary(model1)
+
+model1 <- lm(data$PPI_LL_minus_SL ~
+               data$comp_RS * data$V_beta)
+summary(model1)
+
+scatter <- ggplot(data, aes(x=score_teps_ant,PPI_Salience))+
+  geom_point(colour="black")+
+  geom_smooth(method=lm, se=TRUE, level=0.99, fullrange=TRUE, linetype="dashed", colour="gray", fill="gray")+
+  labs(x="TEPS (Ant)",y="VS--VMPFC (Salience)")+
+  stat_cor(method="pearson")
+scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                    panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+scatter <- ggplot(data, aes(x=score_teps_ant,PPI_LG_minus_SG))+
+  geom_point(colour="black")+
+  geom_smooth(method=lm, se=TRUE, level=0.99, fullrange=TRUE, linetype="dashed", colour="gray", fill="gray")+
+  labs(x="TEPS (Ant)",y="VS--VMPFC (LG>SG)")+
+  stat_cor(method="pearson")
+scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                    panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+scatter <- ggplot(data, aes(x=score_teps_ant,PPI_LL_minus_SL))+
+  geom_point(colour="black")+
+  geom_smooth(method=lm, se=TRUE, level=0.99, fullrange=TRUE, linetype="dashed", colour="gray", fill="gray")+
+  labs(x="TEPS (Ant)",y="VS--VMPFC (LL>SL)")+
+  stat_cor(method="pearson")
+scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                    panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+scatter <- ggplot(data, aes(x=comp_RS,PPI_Salience))+
+  geom_point(colour="black")+
+  geom_smooth(method=lm, se=TRUE, level=0.99, fullrange=TRUE, linetype="dashed", colour="gray", fill="gray")+
+  labs(x="Reward Sensitivity",y="VS--VMPFC (Salience)")+
+  stat_cor(method="pearson")
+scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                    panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+scatter <- ggplot(data, aes(x=comp_RS,PPI_LG_minus_SG))+
+  geom_point(colour="black")+
+  geom_smooth(method=lm, se=TRUE, level=0.99, fullrange=TRUE, linetype="dashed", colour="gray", fill="gray")+
+  labs(x="Reward Sensitivity",y="VS--VMPFC (LG>SG)")+
+  stat_cor(method="pearson")
+scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                    panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+scatter <- ggplot(data, aes(x=comp_RS,PPI_LL_minus_SL))+
+  geom_point(colour="black")+
+  geom_smooth(method=lm, se=TRUE, level=0.99, fullrange=TRUE, linetype="dashed", colour="gray", fill="gray")+
+  labs(x="Reward Sensitivity",y="VS--VMPFC (LL>SL)")+
+  stat_cor(method="pearson")
+scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                    panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+scatter <- ggplot(data, aes(x=V_beta,PPI_Salience))+
+  geom_point(colour="black")+
+  geom_smooth(method=lm, se=TRUE, level=0.99, fullrange=TRUE, linetype="dashed", colour="gray", fill="gray")+
+  labs(x="Behavioral Motivation",y="VS--VMPFC (Salience)")+
+  stat_cor(method="pearson")
+scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                    panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+scatter <- ggplot(data, aes(x=V_beta,PPI_LG_minus_SG))+
+  geom_point(colour="black")+
+  geom_smooth(method=lm, se=TRUE, level=0.99, fullrange=TRUE, linetype="dashed", colour="gray", fill="gray")+
+  labs(x="Behavioral Motivation",y="VS--VMPFC (LG>SG)")+
+  stat_cor(method="pearson")
+scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                    panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+scatter <- ggplot(data, aes(x=V_beta,PPI_LL_minus_SL))+
+  geom_point(colour="black")+
+  geom_smooth(method=lm, se=TRUE, level=0.99, fullrange=TRUE, linetype="dashed", colour="gray", fill="gray")+
+  labs(x="Behavioral Motivation",y="VS--VMPFC (LL>SL)")+
+  stat_cor(method="pearson")
+scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                    panel.background = element_blank(), axis.line = element_line(colour = "gray"))
 
 # Fig 3 B1: LL>SL x Reward Sensitivity
 scatter <- ggplot(data, aes(x=comp_RS,y=Act_LL_minus_SL))+
@@ -66,6 +171,32 @@ scatter <- ggplot(data, aes(x=comp_RS,y=Act_Salience))+
   stat_cor(method="pearson")
 scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                                     panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+# VS activation # Cover your bases by looking at behavioral motivation here too
+model1 <- lm(data$Act_Salience ~
+               data$comp_RS * data$score_teps_ant)
+summary(model1)
+
+model1 <- lm(data$Act_LG_minus_SG ~
+               data$comp_RS * data$score_teps_ant)
+summary(model1)
+
+model1 <- lm(data$Act_LL_minus_SL ~
+               data$comp_RS * data$score_teps_ant)
+summary(model1)
+
+# VS - vmPFC/OFC connectivity
+model1 <- lm(data$Act_Salience ~
+               data$comp_RS * data$score_teps_ant)
+summary(model1)
+
+model1 <- lm(data$Act_LG_minus_SG ~
+               data$comp_RS * data$score_teps_ant)
+summary(model1)
+
+model1 <- lm(data$Act_LL_minus_SL ~
+               data$comp_RS * data$score_teps_ant)
+summary(model1)
 
 # Fig 3 C1: LL>SL x TEPS (Ant)
 scatter <- ggplot(data, aes(x=score_teps_ant,y=Act_LL_minus_SL))+
