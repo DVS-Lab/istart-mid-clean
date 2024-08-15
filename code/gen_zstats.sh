@@ -65,29 +65,31 @@ for TYPE in "act" "ppi_seed-NAcc" "nppi-dmn"; do
 		#done
 		
 		# Create merged zstat image
-		merged_image=merged_type-${TYPE}_cnum-${COPENUM}_cname-${COPENAME}.nii.gz
-		echo "fslmerge: ${merged_image}"
-		fslmerge -t ${basedir}/derivatives/imaging_plots/${merged_image} "${images[@]}"	
+		#merged_image=merged_type-${TYPE}_cnum-${COPENUM}_cname-${COPENAME}.nii.gz
+		#echo "fslmerge: ${merged_image}"
+		#fslmerge -t ${basedir}/derivatives/imaging_plots/${merged_image} "${images[@]}"	
 		
 		# Extract signal from zstat
 		TASK=mid		
-		for TYPE in "act" "type-nppi-dmn" "type-ppi_seed-NAcc"; do
-			for ROI in "seed-VS" "target-vmpfc_bin"; do
-			MASK=${maindir}/masks/${ROI}.nii.gz
-				for COPEINFO in "01 LargeGain" "03 LargeLoss" "05 Hit" "06 Miss" "07 Neut" "11 Salience" "12 Hit-Miss" "13 LG-SG" "14 LL-SL"; do
-					set -- $COPEINFO
-					COPENUM=$1
-					COPENAME=$2
+		for ROI in "seed-VS" "target-vmpfc_bin"; do
+			MASK=${basedir}/masks/${ROI}.nii.gz
+			for COPEINFO in "1 LargeGain" "3 LargeLoss" "5 Hit" "6 Miss" "7 Neut" "11 Salience" "12 Hit-Miss" "13 LG-SG" "14 LL-SL"; do
+				set -- $COPEINFO
+				COPENUM=$1
+				COPENAME=$2
 			
-					# Define vars & execute fslmeants command			
-					INPUT=${basedir}/derivatives/imaging_plots/${merged_image}
-					OUTPUT=${maindir}/derivatives/imaging_plots/zstat_type-${TYPE}_cnum-${COPENUM}_cname-${COPENAME}_mask-${ROI}.txt
-					echo "Extracting zstat ${MASK} from ${TYPE}: ${COPENUM} ${COPENAME}"			
+				# Define vars & execute fslmeants command			
+				INPUT=${basedir}/derivatives/imaging_plots/${merged_image}
+				if [ -e ${INPUPT} ]; then
+					OUTPUT=${basedir}/derivatives/imaging_plots/zstat_type-${TYPE}_cnum-${COPENUM}_cname-${COPENAME}_mask-${ROI}.txt
+					echo "Extracting zstat ${MASK} from ${TYPE}: ${COPENUM} ${COPENAME}"	
+					echo "fslmeants: input = ${INPUT}, mask = ${MASK}, output = ${OUTPUT}"		
 					fslmeants -i $INPUT -m $MASK -o $OUTPUT
-			
+				else
+					echo "skipping ${INPUT}"
+				fi
+			done
 		done
-	done
-done
 	
 	done
 done
