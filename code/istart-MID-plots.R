@@ -783,10 +783,11 @@ summary(model1)
 scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_LG_minus_N, col=LG_N_splitthree))+
   geom_point()+
   geom_point(shape=1)+
-  geom_smooth(method=lm, linetype="dashed", se=FALSE)+
-  labs(x="Reward Sensitivity",y="DMN-VS (LG>N) (zstat)")
+  geom_smooth(method=lm, linetype="solid", se=FALSE)+
+  labs(x="Reward Sensitivity",y="DMN-VS (LG>N)\n(zstat)")
   #stat_cor(method="pearson")
-scatter + scale_color_manual(values = c("black", "red", "blue")) + 
+#scatter + scale_color_manual(values = c("black", "gray")) + 
+scatter + scale_color_manual(values = c("black", "lightgray", "darkgray")) + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "gray"))
 
