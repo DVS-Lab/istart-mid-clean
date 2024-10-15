@@ -780,12 +780,12 @@ model1 <- lm(data$zstat_DMN_VS_LG_minus_N ~
                data$comp_RS * data$LG_N_new)
 summary(model1)
 
-scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_LG_minus_N, col=LG_N_split))+
+scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_LG_minus_N, col=LG_N_splitthree))+
   geom_point()+
   geom_point(shape=1)+
-  geom_smooth(method=lm, linetype="dashed")+
-  labs(x="Reward Sensitivity",y="DMN-VS (LG>N) (zstat)")+
-  stat_cor(method="pearson")
+  geom_smooth(method=lm, linetype="dashed", se=FALSE)+
+  labs(x="Reward Sensitivity",y="DMN-VS (LG>N) (zstat)")
+  #stat_cor(method="pearson")
 scatter + scale_color_manual(values = c("black", "red", "blue")) + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "gray"))
