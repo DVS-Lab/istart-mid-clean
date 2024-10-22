@@ -88,16 +88,34 @@ ggheatmap +
 scatter <- ggplot(data, aes(x=comp_RS, y=V_beta, col=teps_ant_split))+
   geom_point()+
   geom_point(shape=1)+
-  geom_smooth(method=lm, se=TRUE, fullrange=TRUE, linetype="dashed", fill="lightgray")+
-  labs(x="Reward Sensitivity",y="Behavioral Motivation")+
-  stat_cor(method="pearson")
+  geom_smooth(method=lm, se=FALSE, fullrange=TRUE, linetype="solid", fill="lightgray")+
+  labs(x="Reward Sensitivity",y="Behavioral Motivation")
+  #stat_cor(method="pearson")
 scatter + scale_color_manual(values = c("black", "gray")) + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                                      panel.background = element_blank(), axis.line = element_line(colour = "gray"))
 
 model1 <- lm(data$V_beta ~
-               data$comp_RS * data$score_teps_ant)
+               data$score_teps_con + data$comp_RS * data$score_teps_ant)
 summary(model1)
+
+# Figure 4
+# nPPI (DMN seed, VS Target): LG>Neut ******************************************
+model1 <- lm(data$zstat_DMN_VS_LG_minus_N ~
+               data$score_teps_con + data$score_teps_ant + data$comp_RS * data$LG_N_new)
+summary(model1)
+
+scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_LG_minus_N, col=LG_N_splitthree))+
+  geom_point()+
+  geom_point(shape=1)+
+  geom_smooth(method=lm, linetype="solid", se=FALSE)+
+  labs(x="Reward Sensitivity",y="DMN-VS (LG>N)\n(zstat)")
+#stat_cor(method="pearson")
+#scatter + scale_color_manual(values = c("black", "gray")) + 
+scatter + scale_color_manual(values = c("red", "blue", "black")) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
 
 # Fig 3: TEPS x RS x LL>SL VS Act (Beta) **********************************************
 scatter <- ggplot(data, aes(x=comp_RS, y=Act_LL_minus_SL, col=teps_ant_split))+
