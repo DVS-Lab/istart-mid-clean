@@ -139,8 +139,8 @@ model1 <- lm(data$Act_LG_minus_SG ~
 summary(model1)
 
 # ACT (VS): LL>SL [Significant RS*TEPS 3interaction; plot above]
-model1 <- lm(data$Act_LL_minus_SL ~
-               data$comp_RS * data$score_teps_ant)
+model1 <- lm(data$zstat_ACT_VS_LL_minus_SL ~
+               data$score_teps_con + data$comp_RS * data$score_teps_ant)
 summary(model1)
 
 # ACT (VS): LG>Neut
