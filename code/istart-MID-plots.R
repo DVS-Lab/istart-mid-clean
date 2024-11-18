@@ -8,6 +8,7 @@ library("readxl")
 library("ggplot2")
 library("ggpubr")
 library("tidyverse")
+library("tidyr")
 library("reshape2")
 library("ppcor")
 library("dplyr")
@@ -85,6 +86,13 @@ ggheatmap +
 #                                    panel.background = element_blank(), axis.line = element_line(colour = "gray"))
 
 # Fig 2 B2: TEPS x RS x Behavioral Motivation **********************************
+
+ggscatter(data, x="score_teps_ant", y="V_beta", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "pearson",
+          xlab = "Reward Sensitivity", ylab = "Behavioral Motivation")
+
+
 scatter <- ggplot(data, aes(x=comp_RS, y=V_beta, col=teps_ant_split))+
   geom_point()+
   geom_point(shape=1)+
@@ -98,6 +106,32 @@ scatter + scale_color_manual(values = c("black", "gray")) +
 model1 <- lm(data$V_beta ~
                data$score_teps_con + data$comp_RS * data$score_teps_ant)
 summary(model1)
+
+# Stats for Fig 3 **************************************************************
+fig3data <- data[, c("ACT_VS_Neut", "ACT_VS_LargeGain", "ACT_VS_SmallGain", "ACT_VS_LargeLoss", "ACT_VS_SmallLoss")]
+
+# Pivot the data to long format
+data_long <- pivot_longer(fig3data, cols = everything(), names_to = "Condition", values_to = "Value")
+
+# Ensure that 'Condition' is a factor
+data_long$Condition <- factor(data_long$Condition)
+
+# Perform one-way ANOVA
+anova_result <- aov(Value ~ Condition, data = data_long)
+
+# Print ANOVA summary
+summary(anova_result)
+
+# Load the 'multcomp' package
+library(multcomp)
+
+# Tukey HSD test (using glht from the multcomp package)
+post_test <- glht(anova_result,
+                  linfct = mcp(Condition = "Tukey")
+)
+
+# Print the summary of the Tukey test
+summary(post_test)
 
 # Figure 4
 # nPPI (DMN seed, VS Target): LG>Neut ******************************************
