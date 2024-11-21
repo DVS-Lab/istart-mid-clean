@@ -1,4 +1,6 @@
-# set working directory
+# Script for istart-mid manuscript figures & stats
+# See also: https://github.com/DVS-Lab/istart-mid-clean/blob/main/code/Behave_update.ipynb
+
 setwd("~/Desktop")
 maindir <- getwd()
 #datadir <- file.path("~/Documents/Github/rf1-sra-socdoors/code")
@@ -18,9 +20,37 @@ library("psych")
 # import data
 data <- read_xlsx("~/Documents/Github/istart-mid-clean/code/total_df_n46.xlsx")
 
-# Figure 2 Panel C: Heatmap %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-corr_model <- subset(data, select = c("comp_RS", "score_teps_ant", "V_beta", "LG_N_new", "LL_N_new"))
+## Figure 2 Panel B ############################################################
+# Group-level differences & pairwise comparisons:
+# Reshape the data for repeated measures analysis
+long_data <- data %>%
+  pivot_longer(
+    cols = starts_with("Beh_"),  # Select columns of interest
+    names_to = "Condition",         # New column for condition labels
+    values_to = "Value"             # New column for values
+  )
+# Create a factor variable for the repeated measures condition
+long_data$Condition <- factor(long_data$Condition, 
+                              levels = c("Beh_LG", "Beh_SG", "Beh_N", "Beh_SL", "Beh_LL"),
+                              labels = c("Large Gain", "Small Gain", "Neutral", "Small Loss", "Large Loss"))
+# Run the repeated measures ANOVA
+anova_results <- aov(Value ~ Condition + Error(Sub/Condition), data = long_data)
+# Print the ANOVA results
+summary(anova_results)
+# Perform Tukey's HSD for all pairwise comparisons
+# Compute emmeans for the model
+tukey_results <- emmeans(anova_results, ~ Condition)
+# Compute all pairwise comparisons
+pairwise_comparisons <- contrast(
+  tukey_results,
+  method = "pairwise"
+)
+# Print all pairwise comparisons
+pairwise_summary <- summary(pairwise_comparisons)
+print(pairwise_summary)
 
+# Figure 2 Panel C: Heatmap ####################################################
+corr_model <- subset(data, select = c("comp_RS", "score_teps_ant", "V_beta", "LG_N_new", "LL_N_new"))
 cormat <- round(cor(corr_model),2)
 head(cormat)
 
@@ -34,17 +64,14 @@ get_upper_tri <- function(cormat){
   cormat[lower.tri(cormat)]<- NA
   return(cormat)
 }
-
 upper_tri <- get_upper_tri(cormat)
 upper_tri
-
 melted_cormat <- melt(upper_tri, na.rm = TRUE)
 head(melted_cormat)
 melted_cormat
-
 ggheatmap <- ggplot(data = melted_cormat, aes(Var2, Var1, fill = value))+
   geom_tile(color = "black")+
-  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+  scale_fill_gradient2(low = "steelblue3", high = "indianred3", mid = "white", 
                        midpoint = 0, limit = c(-1,1), space = "Lab", 
                        name="Simple Pearson\nCorrelation") +
   theme_minimal()+ 
@@ -67,76 +94,209 @@ ggheatmap +
   guides(fill = guide_colorbar(barwidth = 7, barheight = 1,
                                title.position = "top", title.hjust = 0.5))
 
-## Fig 2 B1: TEPS x Behavioral Motivation
-#scatter <- ggplot(data, aes(x=score_teps_ant,V_beta))+
-#  geom_point(colour="blue")+
-#  geom_smooth(method=lm, se=TRUE, level=0.99, fullrange=TRUE, linetype="dashed", colour="gray", fill="lightblue")+
-#  labs(x="TEPS (Ant)",y="Behavioral Motivation")+
-#  stat_cor(method="pearson")
-#scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-#                                    panel.background = element_blank(), axis.line = element_line(colour = "gray"))
 
-## Fig 2 B2: RS x Behavioral Motivation
-#scatter <- ggplot(data, aes(x=comp_RS,y=V_beta))+
-#  geom_point(colour="blue")+
-#  geom_smooth(method=lm, se=TRUE, level=0.99, fullrange=TRUE, linetype="dashed", colour="gray", fill="lightblue")+
-#  labs(x="Reward Sensitivity",y="Behavioral Motivation")+
-#  stat_cor(method="pearson")
-#scatter + scale_color_hue() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-#                                    panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+## Fig 2 Panel D: TEPS x RS x Behavioral Motivation ############################
 
-# Fig 2 B2: TEPS x RS x Behavioral Motivation **********************************
+# Stats: toggle TEPSc
+model1 <- lm(data$V_beta ~
+               data$score_teps_con + data$comp_RS * data$score_teps_ant)
+summary(model1)
 
-ggscatter(data, x="score_teps_ant", y="V_beta", 
-          add = "reg.line", conf.int = TRUE, 
-          cor.coef = TRUE, cor.method = "pearson",
-          xlab = "Reward Sensitivity", ylab = "Behavioral Motivation")
-
-
+# Plot
 scatter <- ggplot(data, aes(x=comp_RS, y=V_beta, col=teps_ant_split))+
   geom_point()+
   geom_point(shape=1)+
   geom_smooth(method=lm, se=FALSE, fullrange=TRUE, linetype="solid", fill="lightgray")+
   labs(x="Reward Sensitivity",y="Behavioral Motivation")
-  #stat_cor(method="pearson")
+#stat_cor(method="pearson")
 scatter + scale_color_manual(values = c("black", "gray")) + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                                     panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+        panel.background = element_blank(), axis.line = element_line(colour = "gray"))
 
-model1 <- lm(data$V_beta ~
-               data$score_teps_con + data$comp_RS * data$score_teps_ant)
+## Stats for Fig 3 #############################################################
+# Load necessary libraries
+library(dplyr)    # For data manipulation
+library(tidyr)    # For reshaping data
+library(car)      # For repeated measures ANOVA
+library(emmeans)  # For post-hoc analysis (Tukey's HSD)
+
+# Reshape the data for repeated measures analysis
+long_data <- data %>%
+  pivot_longer(
+    cols = starts_with("zstat_ACT_VS_"),  # Select columns of interest
+    names_to = "Condition",         # New column for condition labels
+    values_to = "Value"             # New column for values
+  )
+# Create a factor variable for the repeated measures condition
+long_data$Condition <- factor(long_data$Condition, 
+                              levels = c("zstat_ACT_VS_LargeGain", "zstat_ACT_VS_SmallGain", "zstat_ACT_VS_Neut", "zstat_ACT_VS_SmallLoss", "zstat_ACT_VS_LargeLoss"),
+                              labels = c("Large Gain", "Small Gain", "Neutral", "Small Loss", "Large Loss"))
+# Run the repeated measures ANOVA
+anova_results <- aov(Value ~ Condition + Error(Sub/Condition), data = long_data)
+# Print the ANOVA results
+summary(anova_results)
+# Perform Tukey's HSD for all pairwise comparisons
+# Compute emmeans for the model
+tukey_results <- emmeans(anova_results, ~ Condition)
+# Compute all pairwise comparisons
+pairwise_comparisons <- contrast(
+  tukey_results,
+  method = "pairwise"
+)
+# Print all pairwise comparisons
+pairwise_summary <- summary(pairwise_comparisons)
+print(pairwise_summary)
+
+# Stats:
+# For main Hyp: RS * TEPSa
+model1 <- lm(data$zstat_ACT_VS_Salience ~
+               data$comp_RS * data$score_teps_ant)
 summary(model1)
 
-# Stats for Fig 3 **************************************************************
-fig3data <- data[, c("ACT_VS_Neut", "ACT_VS_LargeGain", "ACT_VS_SmallGain", "ACT_VS_LargeLoss", "ACT_VS_SmallLoss")]
+model2 <- lm(data$zstat_ACT_VS_LG_minus_N ~
+               data$comp_RS * data$score_teps_ant)
+summary(model2)
 
-# Pivot the data to long format
-data_long <- pivot_longer(fig3data, cols = everything(), names_to = "Condition", values_to = "Value")
+model3 <- lm(data$zstat_ACT_VS_LL_minus_N ~
+               data$comp_RS * data$score_teps_ant)
+summary(model3)
+# For continuity: RS * Behavioral Motivation
+model1 <- lm(data$zstat_ACT_VS_Salience ~
+               data$comp_RS * data$V_beta_new)
+summary(model1)
 
-# Ensure that 'Condition' is a factor
-data_long$Condition <- factor(data_long$Condition)
+model2 <- lm(data$zstat_ACT_VS_LG_minus_N ~
+               data$comp_RS * data$LG_N_new)
+summary(model2)
 
-# Perform one-way ANOVA
-anova_result <- aov(Value ~ Condition, data = data_long)
+model3 <- lm(data$zstat_ACT_VS_LL_minus_N ~
+               data$comp_RS * data$LL_N_new)
+summary(model3)
+# For main hyp: RS * Behavioral Motivation contr. for TEPSa
+model1 <- lm(data$zstat_ACT_VS_Salience ~
+               data$score_teps_ant + data$comp_RS * data$V_beta_new)
+summary(model1)
 
-# Print ANOVA summary
-summary(anova_result)
+model2 <- lm(data$zstat_ACT_VS_LG_minus_N ~
+               data$score_teps_ant + data$comp_RS * data$LG_N_new)
+summary(model2)
 
-# Load the 'multcomp' package
-library(multcomp)
+model3 <- lm(data$zstat_ACT_VS_LL_minus_N ~
+               data$score_teps_ant + data$comp_RS * data$LL_N_new)
+summary(model3)
+# For continuity: RS * TEPSa
+model1 <- lm(data$zstat_ACT_VS_Salience ~
+               data$comp_RS * data$score_teps_ant)
+summary(model1)
 
-# Tukey HSD test (using glht from the multcomp package)
-post_test <- glht(anova_result,
-                  linfct = mcp(Condition = "Tukey")
-)
+model2 <- lm(data$zstat_ACT_VS_LG_minus_N ~
+               data$comp_RS * data$score_teps_ant)
+summary(model2)
 
-# Print the summary of the Tukey test
-summary(post_test)
+model3 <- lm(data$zstat_ACT_VS_LL_minus_N ~
+               data$comp_RS * data$score_teps_ant)
+summary(model3)
+# Testing main effects: RS
+model1 <- lm(data$zstat_ACT_VS_Salience ~
+               data$comp_RS)
+summary(model1)
 
-# Figure 4
-# nPPI (DMN seed, VS Target): LG>Neut ******************************************
+model2 <- lm(data$zstat_ACT_VS_LG_minus_N ~
+               data$comp_RS)
+summary(model2)
+
+model3 <- lm(data$zstat_ACT_VS_LL_minus_N ~
+               data$comp_RS)
+summary(model3)
+# Testing main effects: TEPSa
+model1 <- lm(data$zstat_ACT_VS_Salience ~
+               data$score_teps_ant)
+summary(model1)
+
+model2 <- lm(data$zstat_ACT_VS_LG_minus_N ~
+               data$score_teps_ant)
+summary(model2)
+
+model3 <- lm(data$zstat_ACT_VS_LL_minus_N ~
+               data$score_teps_ant)
+summary(model3)
+# Testing main effects: Behavioral Motivation
+model1 <- lm(data$zstat_ACT_VS_Salience ~
+               data$V_beta_new)
+summary(model1)
+
+model2 <- lm(data$zstat_ACT_VS_LG_minus_N ~
+               data$LG_N_new)
+summary(model2)
+
+model3 <- lm(data$zstat_ACT_VS_LL_minus_N ~
+               data$LL_N_new)
+summary(model3)
+
+## Figure 4 ####################################################################
+# nPPI (DMN seed, VS Target)
+
+# Stats: Salience
+model1 <- lm(data$zstat_DMN_VS_Salience ~
+               data$comp_RS * data$V_beta_new)
+summary(model1)
+model1 <- lm(data$zstat_DMN_VS_Salience ~
+               data$comp_RS * data$score_teps_ant)
+summary(model1)
+model1 <- lm(data$zstat_DMN_VS_Salience ~
+               data$score_teps_ant * data$V_beta_new)
+summary(model1)
+
+# LG>N
+model1 <- lm(data$zstat_DMN_VS_LG_minus_N ~
+               data$comp_RS * data$LG_N_new)
+summary(model1) # This one
+model1 <- lm(data$zstat_DMN_VS_LG_minus_N ~
+               data$comp_RS * data$score_teps_ant)
+summary(model1)
+model1 <- lm(data$zstat_DMN_VS_LG_minus_N ~
+               data$score_teps_ant * data$LG_N_new)
+summary(model1)
+
+# LL>N
+model1 <- lm(data$zstat_DMN_VS_LL_minus_N ~
+               data$comp_RS * data$LL_N_new)
+summary(model1) # This one
+model1 <- lm(data$zstat_DMN_VS_LG_minus_N ~
+               data$comp_RS * data$score_teps_ant)
+summary(model1)
+model1 <- lm(data$zstat_DMN_VS_LL_minus_N ~
+               data$score_teps_ant * data$LL_N_new)
+summary(model1)
+
+# Plots
+scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_Salience, col=V_beta_new_splitthree))+
+  geom_point()+
+  geom_point(shape=1)+
+  geom_smooth(method=lm, linetype="solid", se=FALSE)+
+  labs(x="Reward Sensitivity",y="DMN-VS (Salience)\n(zstat)")
+#stat_cor(method="pearson")
+#scatter + scale_color_manual(values = c("black", "gray")) + 
+scatter + scale_color_manual(values = c("red", "blue", "black")) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_Salience, col=V_beta_new_split))+
+  geom_point()+
+  geom_point(shape=1)+
+  geom_smooth(method=lm, se=FALSE, fullrange=TRUE, linetype="solid", fill="lightgray")+
+  labs(x="Reward Sensitivity",y="DMN-VS (Salience)\n(zstat)")
+#stat_cor(method="pearson")
+scatter + scale_color_manual(values = c("black", "gray")) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
 model1 <- lm(data$zstat_DMN_VS_LG_minus_N ~
                data$score_teps_con + data$score_teps_ant + data$comp_RS * data$LG_N_new)
+summary(model1) # This one
+
+model1 <- lm(data$zstat_DMN_VS_LL_minus_N ~
+               data$score_teps_con + data$score_teps_ant + data$comp_RS * data$LL_N_new)
 summary(model1)
 
 scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_LG_minus_N, col=LG_N_splitthree))+
@@ -150,7 +310,7 @@ scatter + scale_color_manual(values = c("red", "blue", "black")) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "gray"))
 
-
+################################################################################
 # Fig 3: TEPS x RS x LL>SL VS Act (Beta) **********************************************
 scatter <- ggplot(data, aes(x=comp_RS, y=Act_LL_minus_SL, col=teps_ant_split))+
   geom_point()+
@@ -957,3 +1117,4 @@ ggheatmap +
   guides(fill = guide_colorbar(barwidth = 7, barheight = 1,
                                title.position = "top", title.hjust = 0.5))
 
+# Color palette sheet: https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf
