@@ -276,7 +276,7 @@ scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_LG_minus_N, col=LG_N_split
   geom_point()+
   geom_point(shape=1)+
   geom_smooth(method=lm, linetype="solid", se=FALSE)+
-  labs(x="Reward Sensitivity",y="DMN-VS (LG>N)\n(zstat)")
+  labs(x="Reward Sensitivity",y="DMN-VS (LG>N)\n(zstat)", color="Behavioral\nMotivation")
 #stat_cor(method="pearson")
 #scatter + scale_color_manual(values = c("black", "gray")) + 
 scatter + scale_color_manual(values = c("red", "blue", "black")) + 
@@ -288,7 +288,7 @@ scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_LL_minus_N, col=LL_N_split
   geom_point()+
   geom_point(shape=1)+
   geom_smooth(method=lm, linetype="solid", se=FALSE)+
-  labs(x="Reward Sensitivity",y="DMN-VS (LL>N)\n(zstat)")
+  labs(x="Reward Sensitivity",y="DMN-VS (LL>N)\n(zstat)", color="Behavioral\nMotivation")
 #stat_cor(method="pearson")
 #scatter + scale_color_manual(values = c("black", "gray")) + 
 scatter + scale_color_manual(values = c("red", "blue", "black")) + 
@@ -300,14 +300,12 @@ scatter <- ggplot(data, aes(x=score_teps_ant, y=zstat_DMN_VS_Salience, col=V_bet
   geom_point()+
   geom_point(shape=1)+
   geom_smooth(method=lm, linetype="solid", se=FALSE)+
-  labs(x="TEPSa",y="DMN-VS (Salience)\n(zstat)")
+  labs(x="TEPSa",y="DMN-VS (Salience)\n(zstat)", color="Behavioral\nMotivation")
 #stat_cor(method="pearson")
 #scatter + scale_color_manual(values = c("black", "gray")) + 
 scatter + scale_color_manual(values = c("red", "blue", "black")) + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "gray"))
-
-
 ################################################################################
 ################################################################################
 ################################################################################
