@@ -245,7 +245,7 @@ model1 <- lm(data$zstat_DMN_VS_Salience ~
 summary(model1)
 model1 <- lm(data$zstat_DMN_VS_Salience ~
                data$score_teps_ant * data$V_beta_new)
-summary(model1)
+summary(model1) # This one too but less so; goes away if you add in RS
 
 # LG>N
 model1 <- lm(data$zstat_DMN_VS_LG_minus_N ~
@@ -261,7 +261,7 @@ summary(model1)
 # LL>N
 model1 <- lm(data$zstat_DMN_VS_LL_minus_N ~
                data$comp_RS * data$LL_N_new)
-summary(model1) # This one
+summary(model1) # And this one
 model1 <- lm(data$zstat_DMN_VS_LG_minus_N ~
                data$comp_RS * data$score_teps_ant)
 summary(model1)
@@ -270,6 +270,47 @@ model1 <- lm(data$zstat_DMN_VS_LL_minus_N ~
 summary(model1)
 
 # Plots
+
+# DMN-VS (LG>N) ~ RS * LG>N
+scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_LG_minus_N, col=LG_N_splitthree))+
+  geom_point()+
+  geom_point(shape=1)+
+  geom_smooth(method=lm, linetype="solid", se=FALSE)+
+  labs(x="Reward Sensitivity",y="DMN-VS (LG>N)\n(zstat)")
+#stat_cor(method="pearson")
+#scatter + scale_color_manual(values = c("black", "gray")) + 
+scatter + scale_color_manual(values = c("red", "blue", "black")) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+# DMN-VS (LL>N) ~ RS * LL>N
+scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_LL_minus_N, col=LL_N_splitthree))+
+  geom_point()+
+  geom_point(shape=1)+
+  geom_smooth(method=lm, linetype="solid", se=FALSE)+
+  labs(x="Reward Sensitivity",y="DMN-VS (LL>N)\n(zstat)")
+#stat_cor(method="pearson")
+#scatter + scale_color_manual(values = c("black", "gray")) + 
+scatter + scale_color_manual(values = c("red", "blue", "black")) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+# DMN-VS (Salience) ~ TEPSa * V_beta
+scatter <- ggplot(data, aes(x=score_teps_ant, y=zstat_DMN_VS_Salience, col=V_beta_new_splitthree))+
+  geom_point()+
+  geom_point(shape=1)+
+  geom_smooth(method=lm, linetype="solid", se=FALSE)+
+  labs(x="TEPSa",y="DMN-VS (Salience)\n(zstat)")
+#stat_cor(method="pearson")
+#scatter + scale_color_manual(values = c("black", "gray")) + 
+scatter + scale_color_manual(values = c("red", "blue", "black")) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
+
+################################################################################
+################################################################################
+################################################################################
 scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_Salience, col=V_beta_new_splitthree))+
   geom_point()+
   geom_point(shape=1)+
@@ -299,18 +340,6 @@ model1 <- lm(data$zstat_DMN_VS_LL_minus_N ~
                data$score_teps_con + data$score_teps_ant + data$comp_RS * data$LL_N_new)
 summary(model1)
 
-scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_LG_minus_N, col=LG_N_splitthree))+
-  geom_point()+
-  geom_point(shape=1)+
-  geom_smooth(method=lm, linetype="solid", se=FALSE)+
-  labs(x="Reward Sensitivity",y="DMN-VS (LG>N)\n(zstat)")
-#stat_cor(method="pearson")
-#scatter + scale_color_manual(values = c("black", "gray")) + 
-scatter + scale_color_manual(values = c("red", "blue", "black")) + 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "gray"))
-
-################################################################################
 # Fig 3: TEPS x RS x LL>SL VS Act (Beta) **********************************************
 scatter <- ggplot(data, aes(x=comp_RS, y=Act_LL_minus_SL, col=teps_ant_split))+
   geom_point()+
