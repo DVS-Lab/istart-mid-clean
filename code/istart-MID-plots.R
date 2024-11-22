@@ -16,6 +16,8 @@ library("ppcor")
 library("dplyr")
 library("ggcorrplot")
 library("psych")
+library("car")      # For repeated measures ANOVA
+library("emmeans")  # For post-hoc analysis (Tukey's HSD)
 
 # import data
 data <- read_xlsx("~/Documents/Github/istart-mid-clean/code/total_df_n46.xlsx")
@@ -114,11 +116,6 @@ scatter + scale_color_manual(values = c("black", "gray")) +
         panel.background = element_blank(), axis.line = element_line(colour = "gray"))
 
 ## Stats for Fig 3 #############################################################
-# Load necessary libraries
-library(dplyr)    # For data manipulation
-library(tidyr)    # For reshaping data
-library(car)      # For repeated measures ANOVA
-library(emmeans)  # For post-hoc analysis (Tukey's HSD)
 
 # Reshape the data for repeated measures analysis
 long_data <- data %>%
@@ -238,18 +235,18 @@ summary(model3)
 
 # Stats: Salience
 model1 <- lm(data$zstat_DMN_VS_Salience ~
-               data$comp_RS * data$V_beta_new)
-summary(model1)
+               data$score_teps_ant + data$comp_RS * data$V_beta_new)
+summary(model1) # This one too
 model1 <- lm(data$zstat_DMN_VS_Salience ~
                data$comp_RS * data$score_teps_ant)
 summary(model1)
 model1 <- lm(data$zstat_DMN_VS_Salience ~
                data$score_teps_ant * data$V_beta_new)
-summary(model1) # This one too but less so; goes away if you add in RS
+summary(model1)
 
 # LG>N
 model1 <- lm(data$zstat_DMN_VS_LG_minus_N ~
-               data$comp_RS * data$LG_N_new)
+               data$score_teps_ant + data$comp_RS * data$LG_N_new)
 summary(model1) # This one
 model1 <- lm(data$zstat_DMN_VS_LG_minus_N ~
                data$comp_RS * data$score_teps_ant)
@@ -260,7 +257,7 @@ summary(model1)
 
 # LL>N
 model1 <- lm(data$zstat_DMN_VS_LL_minus_N ~
-               data$comp_RS * data$LL_N_new)
+               data$score_teps_ant + data$comp_RS * data$LL_N_new)
 summary(model1) # And this one
 model1 <- lm(data$zstat_DMN_VS_LG_minus_N ~
                data$comp_RS * data$score_teps_ant)
@@ -295,17 +292,18 @@ scatter + scale_color_manual(values = c("red", "blue", "black")) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "gray"))
 
-# DMN-VS (Salience) ~ TEPSa * V_beta
-scatter <- ggplot(data, aes(x=score_teps_ant, y=zstat_DMN_VS_Salience, col=V_beta_new_splitthree))+
+# DMN-VS (Salience) ~ RS * V_beta
+scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_Salience, col=V_beta_new_splitthree))+
   geom_point()+
   geom_point(shape=1)+
   geom_smooth(method=lm, linetype="solid", se=FALSE)+
-  labs(x="TEPSa",y="DMN-VS (Salience)\n(zstat)", color="Behavioral\nMotivation")
+  labs(x="Reward Sensitivity",y="DMN-VS (Salience)\n(zstat)", color="Behavioral\nMotivation")
 #stat_cor(method="pearson")
 #scatter + scale_color_manual(values = c("black", "gray")) + 
 scatter + scale_color_manual(values = c("red", "blue", "black")) + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "gray"))
+
 ################################################################################
 ################################################################################
 ################################################################################
