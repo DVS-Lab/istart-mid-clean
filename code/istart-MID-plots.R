@@ -297,7 +297,7 @@ scatter <- ggplot(data, aes(x=comp_RS, y=zstat_DMN_VS_Salience, col=V_beta_new_s
   geom_point()+
   geom_point(shape=1)+
   geom_smooth(method=lm, linetype="solid", se=FALSE)+
-  labs(x="Reward Sensitivity",y="DMN-VS (Salience)\n(zstat)", color="Behavioral\nMotivation")
+  labs(x="Reward Sensitivity",y="DMN-VS (Salience)\n(zstat)", color="Behavioral\nMotivation\n(HS>LS)")
 #stat_cor(method="pearson")
 #scatter + scale_color_manual(values = c("black", "gray")) + 
 scatter + scale_color_manual(values = c("red", "blue", "black")) + 
