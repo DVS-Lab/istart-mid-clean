@@ -304,6 +304,179 @@ scatter + scale_color_manual(values = c("red", "blue", "black")) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "gray"))
 
+
+## Forest Plots
+
+# Load required packages
+library(forestplot)
+library(dplyr)
+
+# Note: Check forestplot version for compatibility
+#cat("forestplot version:", packageVersion("forestplot"), "\n")
+
+# Assuming 'data' is your dataframe with all variables
+# Define behavioral and brain activity variables
+behavioral_vars <- c("comp_RS", "V_beta_new", "LG_N_new", "LL_N_new", "score_teps_ant")
+brain_vars <- c("Act_Salience", "Act_Gain_minus_Neut", "Act_Loss_minus_Neut")
+
+# Check data types and convert to numeric if necessary
+for (var in c(behavioral_vars, brain_vars)) {
+  if (!is.numeric(data[[var]])) {
+    data[[var]] <- as.numeric(as.character(data[[var]]))
+    warning(paste("Converted", var, "to numeric"))
+  }
+}
+
+# Define specific combinations in the desired order
+desired_pairs <- data.frame(
+  behavioral = c("comp_RS", "comp_RS", "comp_RS", 
+                 "V_beta_new", "LG_N_new", "LL_N_new", 
+                 "score_teps_ant", "score_teps_ant", "score_teps_ant"),
+  brain = c("Act_Salience", "Act_Gain_minus_Neut", "Act_Loss_minus_Neut",
+            "Act_Salience", "Act_Gain_minus_Neut", "Act_Loss_minus_Neut",
+            "Act_Salience", "Act_Gain_minus_Neut", "Act_Loss_minus_Neut")
+)
+
+# Create combinations
+combinations <- desired_pairs
+cat("Number of combinations:", nrow(combinations), "\n")
+
+# Calculate correlations, confidence intervals, and p-values
+results <- combinations %>%
+  rowwise() %>%
+  mutate(
+    correlation = tryCatch({
+      if (sd(data[[behavioral]], na.rm = TRUE) == 0 || sd(data[[brain]], na.rm = TRUE) == 0) {
+        NA
+      } else {
+        cor_result <- cor.test(data[[behavioral]], data[[brain]], method = "pearson")
+        cor_result$estimate
+      }
+    }, error = function(e) {
+      warning(paste("Error in cor.test for", behavioral, "vs", brain, ":", e$message))
+      NA
+    }),
+    ci_lower = tryCatch({
+      if (sd(data[[behavioral]], na.rm = TRUE) == 0 || sd(data[[brain]], na.rm = TRUE) == 0) {
+        NA
+      } else {
+        cor_result <- cor.test(data[[behavioral]], data[[brain]], method = "pearson")
+        cor_result$conf.int[1]
+      }
+    }, error = function(e) NA),
+    ci_upper = tryCatch({
+      if (sd(data[[behavioral]], na.rm = TRUE) == 0 || sd(data[[brain]], na.rm = TRUE) == 0) {
+        NA
+      } else {
+        cor_result <- cor.test(data[[behavioral]], data[[brain]], method = "pearson")
+        cor_result$conf.int[2]
+      }
+    }, error = function(e) NA),
+    p_value = tryCatch({
+      if (sd(data[[behavioral]], na.rm = TRUE) == 0 || sd(data[[brain]], na.rm = TRUE) == 0) {
+        NA
+      } else {
+        cor_result <- cor.test(data[[behavioral]], data[[brain]], method = "pearson")
+        cor_result$p.value
+      }
+    }, error = function(e) NA)
+  ) %>%
+  ungroup()
+
+# Print results for debugging
+cat("Results before filtering:\n")
+print(summary(results))
+print(results)
+
+# Remove rows with NA in any critical column
+results <- results %>% 
+  filter(!is.na(correlation) & !is.na(ci_lower) & !is.na(ci_upper) & !is.na(p_value))
+
+# Check if there are any valid results
+cat("Number of valid correlations after filtering:", nrow(results), "\n")
+if (nrow(results) == 0) {
+  stop("No valid correlations found. Check the 'results' output above for NA or invalid correlations.")
+}
+
+# Rename variables for display
+results <- results %>%
+  mutate(
+    behavioral_display = case_when(
+      behavioral == "comp_RS" ~ "RS",
+      behavioral == "V_beta_new" ~ "Behavioral Motivation (HS>LS)",
+      behavioral == "LG_N_new" ~ "Behavioral Motivation (LG>N)",
+      behavioral == "LL_N_new" ~ "Behavioral Motivation (LL>N)",
+      behavioral == "score_teps_ant" ~ "Anhedonia"
+    ),
+    brain_display = case_when(
+      brain == "Act_Salience" ~ "VS (HS>LS)",
+      brain == "Act_Gain_minus_Neut" ~ "VS (LG>N)",
+      brain == "Act_Loss_minus_Neut" ~ "VS (LL>N)"
+    )
+  )
+
+# Prepare data for forest plot
+mean <- results$correlation
+lower <- results$ci_lower
+upper <- results$ci_upper
+p_values <- results$p_value
+
+# Create labels for the plot with renamed variables
+labels <- paste(results$behavioral_display, "vs", results$brain_display)
+
+# Create table text with p-value column
+tabletext <- cbind(
+  c("Comparison", labels),
+  c("Correlation", sprintf("%.2f", mean)),
+  c("P-value", sprintf("%.3f", p_values))
+)
+
+# Verify dimensions for debugging
+cat("Dimensions of tabletext:", dim(tabletext), "\n")
+cat("Length of mean:", length(mean), "\n")
+cat("Length of lower:", length(lower), "\n")
+cat("Length of upper:", length(upper), "\n")
+cat("Length of p_values:", length(p_values), "\n")
+
+# Create a matrix for plotting data
+plot_data <- cbind(mean, lower, upper)
+plot_data <- rbind(c(NA, NA, NA), plot_data)  # Add NA row for header
+
+# Define which rows are summary (header)
+is_summary <- c(TRUE, rep(FALSE, nrow(results)))
+
+# Create the forest plot
+forestplot(
+  labeltext = tabletext,
+  mean = plot_data[, 1],
+  lower = plot_data[, 2],
+  upper = plot_data[, 3],
+  is.summary = is_summary,
+  title = "Correlation between Behavioral and Brain Activity Variables",
+  xlab = "Pearson Correlation Coefficient",
+  zero = 0,
+  boxsize = 0.2,
+  col = fpColors(
+    box = "royalblue",
+    line = "royalblue",
+    summary = "black"
+  ),
+  xticks = seq(-1, 1, by = 0.2),
+  grid = TRUE,
+  lwd.ci = 1,
+  ci.vertices = TRUE,
+  ci.vertices.height = 0.1,
+  align = c("l", "c", "c"),
+  txt_gp = fpTxtGp(
+    xlab = gpar(cex = 1.2),  # Increase x-axis label font size
+    ticks = gpar(cex = 1.2),  # Increase x-axis tick font size
+    label = gpar(cex = 0.8)  # Smaller font for labels to reduce spacing
+  ),
+  rowheight = 0.1,  # Reduce row height to decrease text spacing
+  lineheight = "auto"  # Adjust line height automatically
+)
+
+
 ################################################################################
 ################################################################################
 ################################################################################
